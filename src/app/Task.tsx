@@ -1,6 +1,6 @@
 "use client"
 
-import {deleteTask} from "@/actions/delete";
+import {deleteTask} from "@/actions/action";
 import {useState} from "react";
 
 type Props = {

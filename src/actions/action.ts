@@ -13,3 +13,12 @@ export async function addTask(formData: FormData){
 
   revalidatePath("/")
 }
+
+export async function deleteTask(id: string){
+  await prisma.task.delete({
+    where: {
+      id: id
+    }
+  })
+  revalidatePath('/')
+}
