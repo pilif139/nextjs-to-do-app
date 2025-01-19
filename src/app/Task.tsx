@@ -4,24 +4,17 @@ import deleteTask from "@/actions/deleteTask";
 import { useState } from "react";
 import type { Task } from "@prisma/client";
 import editTask from "@/actions/editTask";
+import useToggleTimeFormat from "@/hooks/useToggleTimeFormat";
 
 type Props = {
   task: Task;
 };
 
 export default function Task({ task }: Props) {
-  const [time, setTime] = useState<string>(
-    task.createdAt.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    })
-  );
+  const [time, setTime] = useState(new Date(task.createdAt));
+  const [formattedTime, setIsLocaleTime] = useToggleTimeFormat(time);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [updatedTask, setUpdatedTask] = useState<string>("");
-
-  const handleTimeClick = () => {
-
-  };
 
   return (
     <li className="flex items-center justify-between bg-gray-500 text-white font-medium text-xl min-w-[50rem] m-2 rounded-2xl shadow-xl p-3 hover:bg-gray-600 transition">
@@ -39,9 +32,9 @@ export default function Task({ task }: Props) {
             <span>{task.title} - &nbsp;</span>
             <button
               className="text-slate-200 font-light text-md hover:font-bold hover:cursor-pointer transition-all"
-              onClick={handleTimeClick}
+              onClick={() => setIsLocaleTime((prev) => !prev)}
             >
-              {time}
+              {formattedTime}
             </button>
           </>
         )}
@@ -55,10 +48,7 @@ export default function Task({ task }: Props) {
                 setIsUpdating(false);
                 if (updatedTask === "") return;
                 editTask(task.id, updatedTask);
-                setTime(new Date().toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                }));
+                setTime(new Date());
               }}
             >
               Save
