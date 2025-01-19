@@ -11,7 +11,13 @@ type Props = {
 };
 
 export default function Task({ task }: Props) {
-  const [time, setTime] = useState(new Date(task.createdAt));
+  const [time, setTime] = useState(() => {
+    if (new Date(task.createdAt).getTime() < new Date(task.updatedAt).getTime()) {
+      return new Date(task.updatedAt);
+    } else {
+      return new Date(task.createdAt);
+    }
+  });
   const [formattedTime, setIsLocaleTime] = useToggleTimeFormat(time);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [updatedTask, setUpdatedTask] = useState<string>("");
