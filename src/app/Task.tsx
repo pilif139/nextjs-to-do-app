@@ -23,7 +23,7 @@ export default function Task({ task }: Props) {
   const [updatedTask, setUpdatedTask] = useState<string>("");
 
   return (
-    <li className="flex items-center justify-between bg-gray-500 text-white font-medium text-xl min-w-[50rem] m-2 rounded-2xl shadow-xl p-3 hover:bg-gray-600 transition">
+    <div className="flex items-center justify-between bg-gray-500 text-white font-medium text-xl min-w-[50rem] m-2 rounded-2xl shadow-xl p-3 hover:bg-gray-600 transition">
       <div>
         {isUpdating ? (
           <input
@@ -61,19 +61,19 @@ export default function Task({ task }: Props) {
             </button>
           ) : (
             <button
-              className="bg-green-600 p-2 rounded-xl hover:bg-green-700 transition mx-3"
+              className="bg-green-600 py-2 px-5 rounded-xl font-light hover:font-bold hover:bg-green-700 transition-all mx-3"
               onClick={() => setIsUpdating(true)}
             >
               Edit
             </button>
           )}
         <button
-          className="bg-red-600 p-2 rounded-xl hover:bg-red-700 transition"
+          className="bg-red-600 py-2 px-5 rounded-xl font-light hover:font-bold hover:bg-red-700 transition-all"
           onClick={() => deleteTask(task.id)}
         >
           Delete
         </button>
       </div>
-    </li >
+    </div>
   );
 }
